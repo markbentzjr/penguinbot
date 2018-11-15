@@ -1,5 +1,4 @@
 discord
 asyncio
 simplejson
-json
 boto
