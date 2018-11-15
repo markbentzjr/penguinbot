@@ -4,8 +4,7 @@ import discord
 from discord.ext import commands
 import json
 import os
-from boto.s3.connection import S3Connection
-s3 = S3Connection(os.environ['TOKEN'])
+
 
 bot = commands.Bot(command_prefix='#')
 
@@ -90,4 +89,4 @@ async def rank(ctx):
 
 
 
-bot.run(s3)
+bot.run("NTEwNjExOTg4MjY3OTI1NTE0.DsfTuw.v90EIstH5v8VRv0mzOlc99gCfMY")
