@@ -89,4 +89,4 @@ async def rank(ctx):
 
 
 
-bot.run(str(os.eviron.get(TOKEN)))
+bot.run(TOKEN)
