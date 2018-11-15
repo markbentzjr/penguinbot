@@ -89,4 +89,4 @@ async def rank(ctx):
 
 
 
-bot.run("NTEwNjExOTg4MjY3OTI1NTE0.DsfTuw.v90EIstH5v8VRv0mzOlc99gCfMY")
+bot.run("TOKEN")
