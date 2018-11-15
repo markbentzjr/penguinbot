@@ -2,7 +2,7 @@
 
 import discord
 from discord.ext import commands
-from simplejson import json
+import json
 import os
 
 
