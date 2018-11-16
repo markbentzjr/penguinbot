@@ -5,6 +5,10 @@ from discord.ext import commands
 import json
 import os
 
+import psycopg2
+
+DATABASE_URL = os.environ['DATABASE_URL']
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 bot = commands.Bot(command_prefix='#')
 
