@@ -7,7 +7,7 @@ import os
 
 import psycopg2
 
-DATABASE_URL = os.environ['DATABASE_URL']
+DATABASE_URL = os.environ['https://data.heroku.com/datastores/413396c3-54c1-4519-8372-3284ff301284']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 bot = commands.Bot(command_prefix='#')
