@@ -1,4 +1,4 @@
 discord
 asyncio
 simplejson
-boto
+psycopg2-binary
