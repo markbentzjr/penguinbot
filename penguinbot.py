@@ -12,7 +12,7 @@ conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 bot = commands.Bot(command_prefix='#')
 
-def create_tables()
+async def create_tables()
     """ create tables in the PostgreSQL database"""
     commands = (
         """
