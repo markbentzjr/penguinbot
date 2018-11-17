@@ -12,6 +12,15 @@ conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 bot = commands.Bot(command_prefix='#')
 
+def create_tables()
+    """ create tables in the PostgreSQL database"""
+    commands = (
+        """
+        CREATE TABLE vendors (
+            vendor_id SERIAL PRIMARY KEY,
+            vendor_name VARCHAR(255) NOT NULL
+        )
+        """)
 
 @bot.event
 async def on_ready():
