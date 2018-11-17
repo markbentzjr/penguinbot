@@ -16,32 +16,19 @@ bot = commands.Bot(command_prefix='#')
 cur = conn.cursor()
 # create a table with one column per field
 cur.execute(
-"""CREATE TABLE t_skaters (seasonId INTEGER, playerName VARCHAR, ...);"""
+    CREATE TABLE t_skaters (seasonId INTEGER, playerName VARCHAR);
 )
 
 fields = [
     'seasonId',
     'playerName',
-    'playerFirstName',
-    'playerLastName',
-    'playerId',
-    'playerHeight',
-    'playerPositionCode',
-    'playerShootsCatches',
-    'playerBirthCity',
-    'playerBirthCountry',
-    'playerBirthStateProvince',
-    'playerBirthDate',
-    'playerDraftYear',
-    'playerDraftRoundNo',
-    'playerDraftOverallPickNo'
 ]
 
 for item in data:
     my_data = [item[field] for field in fields]
     # need a placeholder (%s) for each variable 
     # refer to postgres docs on INSERT statement on how to specify order
-    cur.execute("INSERT INTO t_skaters VALUES (%s, %s, ...)", tuple(my_data))
+    cur.execute("INSERT INTO t_skaters VALUES (%s)", tuple(my_data))
 
 
 # commit changes
