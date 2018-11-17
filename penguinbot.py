@@ -12,15 +12,10 @@ conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 bot = commands.Bot(command_prefix='#')
 
-async def create_tables()
-    """ create tables in the PostgreSQL database"""
-    commands = (
-        """
-        CREATE TABLE vendors (
-            vendor_id SERIAL PRIMARY KEY,
-            vendor_name VARCHAR(255) NOT NULL
-        )
-        """)
+try:
+    conn = psycopg2.connect("dbname='template1' user='dbuser' host='localhost' password='dbpass'")
+except:
+    print "I am unable to connect to the database"
 
 @bot.event
 async def on_ready():
