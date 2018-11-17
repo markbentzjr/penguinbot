@@ -15,6 +15,14 @@ try:
 except:
     print("I am unable to connect to the database")
 
+    
+cur = conn.cursor()
+cur.execute(postgresql-colorful-53460)
+rows = cur.fetchall()
+print("\nShow me the databases:\n")
+for row in rows:
+    print("Hi"), row[0]
+    
 @bot.event
 async def on_ready():
     print("Penguin Bot Online")
