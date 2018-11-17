@@ -17,7 +17,7 @@ except:
 
     
 cur = conn.cursor()
-cur.execute(d1retcdgg1t1jc)
+cur.execute(postgres://ifdvmdjrmodlah:42f5736ca2b49f5276f85a933a89ae495f65310a5c13ee3cefe45d5a5a5d7955@ec2-50-17-203-51.compute-1.amazonaws.com:5432/d1retcdgg1t1jc)
 rows = cur.fetchall()
 print("\nShow me the databases:\n")
 for row in rows:
