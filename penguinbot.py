@@ -12,29 +12,11 @@ conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 bot = commands.Bot(command_prefix='#')
 
-# same boilerplate code from above
-cur = conn.cursor()
-# create a table with one column per field
-cur.execute(
-    CREATE TABLE t_skaters (seasonId INTEGER, playerName VARCHAR);
-)
-
-fields = [
-    'seasonId',
-    'playerName',
-]
-
-for item in data:
-    my_data = [item[field] for field in fields]
-    # need a placeholder (%s) for each variable 
-    # refer to postgres docs on INSERT statement on how to specify order
-    cur.execute("INSERT INTO t_skaters VALUES (%s)", tuple(my_data))
-
-
-# commit changes
-conn.commit()
-# Close the connection
-conn.close()
+CREATE TABLE users (
+    name            varchar(80),
+    experience         int,           -- XP
+    level              int,           -- Rank
+);
 
 
 @bot.event
@@ -68,7 +50,6 @@ async def on_message(message):
 
 async def update_data(users, user):
     if not user.id in users:
-        json_build_object('{}'.format(user.id),exp,'level',1)
         users[user.id] = {}
         users[user.id]['experience'] = 0
         users[user.id]['level'] = 1
