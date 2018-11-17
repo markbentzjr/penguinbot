@@ -11,12 +11,29 @@ DATABASE_URL = os.environ['DATABASE_URL']
 bot = commands.Bot(command_prefix='#')
 
 try:
-    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-except:
-    print("I am unable to connect to the database")
-
+    connection = psycopg2.connect(user = "ifdvmdjrmodlah",
+                                  password = "42f5736ca2b49f5276f85a933a89ae495f65310a5c13ee3cefe45d5a5a5d7955",
+                                  host = "ec2-50-17-203-51.compute-1.amazonaws.com",
+                                  port = "5432",
+                                  database = "d1retcdgg1t1jc")
+    cursor = connection.cursor()
     
-cur = conn.cursor()
+    create_table_query = '''CREATE TABLE mobile
+          (ID INT PRIMARY KEY     NOT NULL,
+          MODEL           TEXT    NOT NULL,
+          PRICE         REAL); '''
+    
+    cursor.execute(create_table_query)
+    connection.commit()
+    print("Table created successfully in PostgreSQL ")
+except (Exception, psycopg2.DatabaseError) as error :
+    print ("Error while creating PostgreSQL table", error)
+finally:
+    #closing database connection.
+        if(connection):
+            cursor.close()
+            connection.close()
+            print("PostgreSQL connection is closed")
 
     
 @bot.event
