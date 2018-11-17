@@ -8,12 +8,10 @@ import psycopg2
 
 DATABASE_URL = os.environ['DATABASE_URL']
 
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-
 bot = commands.Bot(command_prefix='#')
 
 try:
-    conn = psycopg2.connect("dbname='template1' user='dbuser' host='localhost' password='dbpass'")
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 except:
     print("I am unable to connect to the database")
 
