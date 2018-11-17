@@ -12,12 +12,6 @@ conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 bot = commands.Bot(command_prefix='#')
 
-CREATE TABLE users (
-    name            varchar(80),
-    experience         int,           -- XP
-    level              int,           -- Rank
-);
-
 
 @bot.event
 async def on_ready():
