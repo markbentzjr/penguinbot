@@ -17,7 +17,7 @@ except:
 
     
 cur = conn.cursor()
-cur.execute(postgresql-colorful-53460)
+cur.execute(d1retcdgg1t1jc)
 rows = cur.fetchall()
 print("\nShow me the databases:\n")
 for row in rows:
