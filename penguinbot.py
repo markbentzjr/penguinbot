@@ -30,9 +30,9 @@ async def create_user_table():
         cursor = connection.cursor()
         cursor.execute(commands)
         # close communication with the PostgreSQL database server
-    cursor.close()
+        cursor.close()
     # commit the changes
-    connection.commit()
+        connection.commit()
     except(Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
