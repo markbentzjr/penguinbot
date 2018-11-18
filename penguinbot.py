@@ -28,8 +28,7 @@ async def create_user_table():
                                       port="5432",
                                       database="d1retcdgg1t1jc")
         cursor = connection.cursor()
-    for command in commands:
-        cursor.execute(command)
+        cursor.execute(commands)
         # close communication with the PostgreSQL database server
     cursor.close()
     # commit the changes
