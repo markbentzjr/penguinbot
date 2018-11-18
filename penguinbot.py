@@ -10,6 +10,10 @@ DATABASE_URL = os.environ['DATABASE_URL']
 
 bot = commands.Bot(command_prefix='#')
 
+
+@bot.event
+async def on_ready():
+    print("Penguin Bot Online")
 async def create_user_table():
     try:
         connection = psycopg2.connect(user="ifdvmdjrmodlah",
@@ -34,12 +38,6 @@ async def create_user_table():
             cursor.close()
             connection.close()
             print("PostgreSQL connection is closed")
-
-
-@bot.event
-async def on_ready():
-    print("Penguin Bot Online")
-
 
 @bot.event
 async def on_message(message):
