@@ -41,8 +41,8 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     await bot.process_commands(message)
-    await check_user(message.author)
-    await update_data(message)
+    await check_user(message)
+    await update_data(message.author.id, 5, message.author)
 
 async def check_user(message):
         connection=None
@@ -72,10 +72,10 @@ async def check_user(message):
             if connection is not None:
                 connection.close()
 
-async def update_data(users_id, users_experience, users_level, user: discord.Member):
+async def update_data(users_id, users_experience, user: discord.Member):
         """ update vendor name based on the vendor id """
         sql = """ UPDATE users
-                    SET users_experience = %s + 5
+                    SET users_experience = %s
                     WHERE users_id = %s"""
         connection = None
         try:
@@ -86,6 +86,8 @@ async def update_data(users_id, users_experience, users_level, user: discord.Mem
                                           database="d1retcdgg1t1jc")
             cursor = connection.cursor()
             cursor.execute(sql, (users_experience, users_id))
+            cursor.execute("SELECT users_id, users_level FROM users ORDER BY users_experience")
+            users_level = cursor.fetchall()
             # get the number of updated rows
             updated_rows = cursor.rowcount
             connection.commit()
@@ -151,6 +153,5 @@ async def rank(ctx):
 
 
 bot.run(os.getenv("TOKEN"))
-
 
 
