@@ -12,6 +12,12 @@ bot = commands.Bot(command_prefix='#')
 
 
 cur = conn.cursor()
+create_table_query = '''CREATE TABLE users
+            (ID INT PRIMARY KEY     NOT NULL,
+             EXPERIENCE    INT       NOT NULL,
+             LEVEL         INT); '''
+
+cursor.execute(create_table_query)
 sq1 = """ INSERT INTO users (ID, EXPERIENCE, LEVEL) VALUES (%s,%s,%s)"""
 insert = (210653742133936128, 0, 1)
 cur.execute(sq1, insert)
@@ -27,102 +33,12 @@ if conn:
 @bot.event
 async def on_ready():
     print("Penguin Bot Online")
-    try:
-        connection = psycopg2.connect(user="ifdvmdjrmodlah",
-                                  password="42f5736ca2b49f5276f85a933a89ae495f65310a5c13ee3cefe45d5a5a5d7955",
-                                  host="ec2-50-17-203-51.compute-1.amazonaws.com",
-                                  port="5432",
-                                  database="d1retcdgg1t1jc")
-        cursor = connection.cursor()
-        create_table_query = '''CREATE TABLE users
-            (ID INT PRIMARY KEY     NOT NULL,
-             EXPERIENCE    INT       NOT NULL,
-             LEVEL         INT); '''
 
-        cursor.execute(create_table_query)
-        connection.commit()
-        print("Table created successfully in PostgreSQL ")
-    except (Exception, psycopg2.DatabaseError) as error :
-        print ("Error while creating PostgreSQL table", error)
-    finally:
-        #closing database connection.
-        if(connection):
-            cursor.close()
-            connection.close()
-            print("PostgreSQL connection is closed")
 
 @bot.event
 async def on_message(message):
     await bot.process_commands(message)
-    await check_user(message)
-    await update_data(message.author.id, 5, message.author)
 
-async def check_user(message):
-        connection=None
-        try:
-            connection = psycopg2.connect(user="ifdvmdjrmodlah",
-                                          password="42f5736ca2b49f5276f85a933a89ae495f65310a5c13ee3cefe45d5a5a5d7955",
-                                          host="ec2-50-17-203-51.compute-1.amazonaws.com",
-                                          port="5432",
-                                          database="d1retcdgg1t1jc")
-            cursor = connection.cursor()
-            cursor.execute("SELECT users_id, users_experience FROM users ORDER BY users_experience")
-            users_id = cursor.fetchall()
-            print("The number of users: ", cursor.rowcount)
-            if not message.author.id in users_id:
-                postgres_insert_query = """ INSERT INTO users (ID, EXPERIENCE, LEVEL) VALUES (%s,%s,%s)"""
-                record_to_insert = (message.author.id, 0, 1)
-                cursor.execute(postgres_insert_query, record_to_insert)
-                connection.commit()
-                count = cursor.rowcount
-                print(count, "Record inserted successfully into users table")
-            for row in users_id:
-                print(row)
-            cursor.close()
-        except (Exception, psycopg2.DatabaseError) as error:
-            print(error)
-        finally:
-            if connection is not None:
-                connection.close()
-
-async def update_data(users_id, users_experience, user: discord.Member):
-        """ update vendor name based on the vendor id """
-        sql = """ UPDATE users
-                    SET users_experience = %s
-                    WHERE users_id = %s"""
-        connection = None
-        try:
-            connection = psycopg2.connect(user="ifdvmdjrmodlah",
-                                          password="42f5736ca2b49f5276f85a933a89ae495f65310a5c13ee3cefe45d5a5a5d7955",
-                                          host="ec2-50-17-203-51.compute-1.amazonaws.com",
-                                          port="5432",
-                                          database="d1retcdgg1t1jc")
-            cursor = connection.cursor()
-            cursor.execute(sql, (users_experience, users_id))
-            cursor.execute("SELECT users_id, users_level FROM users ORDER BY users_experience")
-            users_level = cursor.fetchall()
-            # get the number of updated rows
-            updated_rows = cursor.rowcount
-            connection.commit()
-            print(updated_rows, "Record inserted successfully into users table")
-            lvl_end=int(users_experience**(1/4))
-            if users_level<lvl_end:
-                sq2 = """ UPDATE users
-                            SET users_level = %s + 1
-                            WHERE users_id = %s"""
-                cursor = connection.cursor()
-                cursor.execute(sq2, (users_level, users_id))
-                await bot.send_message("{} has ranked up to rank {}".format(user.name, users_level))
-                print("Updated user Level")
-                connection.commit()
-        except (Exception, psycopg2.DatabaseError) as error:
-            print("Error while creating PostgreSQL table", error)
-        finally:
-            # closing database connection.
-            if connection:
-                cursor.close()
-                connection.close()
-                print("PostgreSQL connection is closed")
 
 
 @bot.event
