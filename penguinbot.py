@@ -41,7 +41,10 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     await bot.process_commands(message)
-    async def check_user(users_id):
+    await check_user(message.author)
+    await update_data(message)
+
+async def check_user(message):
         connection=None
         try:
             connection = psycopg2.connect(user="ifdvmdjrmodlah",
@@ -51,7 +54,7 @@ async def on_message(message):
                                           database="d1retcdgg1t1jc")
             cursor = connection.cursor()
             cursor.execute("SELECT users_id, users_experience FROM users ORDER BY users_experience")
-            rows = cursor.fetchall()
+            users_id = cursor.fetchall()
             print("The number of users: ", cursor.rowcount)
             if not message.author.id in users_id:
                 postgres_insert_query = """ INSERT INTO users (ID, EXPERIENCE, LEVEL) VALUES (%s,%s,%s)"""
@@ -59,25 +62,22 @@ async def on_message(message):
                 cursor.execute(postgres_insert_query, record_to_insert)
                 connection.commit()
                 count = cursor.rowcount
-                print(count, "Record inserted successfully into mobile table")
-            for row in rows:
+                print(count, "Record inserted successfully into users table")
+            for row in users_id:
                 print(row)
             cursor.close()
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
         finally:
             if connection is not None:
-                connction.close()
+                connection.close()
 
-
-
-    async def update_data(users_id, users_experience, users_level):
+async def update_data(users_id, users_experience, users_level, user: discord.Member):
         """ update vendor name based on the vendor id """
         sql = """ UPDATE users
                     SET users_experience = %s + 5
                     WHERE users_id = %s"""
-        conn = None
-        updated_rows = 0
+        connection = None
         try:
             connection = psycopg2.connect(user="ifdvmdjrmodlah",
                                           password="42f5736ca2b49f5276f85a933a89ae495f65310a5c13ee3cefe45d5a5a5d7955",
@@ -89,15 +89,26 @@ async def on_message(message):
             # get the number of updated rows
             updated_rows = cursor.rowcount
             connection.commit()
-            print(updated_rows, "Record inserted successfully into mobile table")
+            print(updated_rows, "Record inserted successfully into users table")
+            lvl_end=int(users_experience**(1/4))
+            if users_level<lvl_end
+                sq2 = """ UPDATE users
+                            SET users_level = %s + 1
+                            WHERE users_id = %s"""
+                cursor = connection.cursor()
+                cursor.execute(sq2, (users_level, users_id))
+                await bot.send_message("{} has ranked up to rank {}".format(user.name, users_level))
+                print("Updated user Level")
+                connection.commit()
         except (Exception, psycopg2.DatabaseError) as error:
             print("Error while creating PostgreSQL table", error)
         finally:
             # closing database connection.
-            if (connection):
+            if connection:
                 cursor.close()
                 connection.close()
                 print("PostgreSQL connection is closed")
+
 
 @bot.event
 async def on_message(message):
@@ -140,5 +151,6 @@ async def rank(ctx):
 
 
 bot.run(os.getenv("TOKEN"))
+
 
 
