@@ -1,3 +1,5 @@
+# bot by SteelPenguin87
+
 import discord
 from discord.ext import commands
 import json
@@ -19,7 +21,8 @@ async def on_message(message):
     if message.content == 'Penguin':
         await bot.send_message(message.channel, ":penguin:")
 
-    async def check_user(users_id):
+ async def check_user(users_id, message):
+     connection=None
         try:
             connection = psycopg2.connect(user="ifdvmdjrmodlah",
                                           password="42f5736ca2b49f5276f85a933a89ae495f65310a5c13ee3cefe45d5a5a5d7955",
@@ -39,12 +42,12 @@ async def on_message(message):
                 print(count, "Record inserted successfully into mobile table")
             for row in rows:
                 print(row)
-            cur.close()
+            cursor.close()
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
         finally:
-            if conn is not None:
-                conn.close()
+            if connection is not None:
+                connction.close()
 
 
 
