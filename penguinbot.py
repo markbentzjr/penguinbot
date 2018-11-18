@@ -54,6 +54,7 @@ async def on_message(message):
     print("work2")
     cur.execute(getinfo, 'm')
     xp = cur.fetchall()
+    print(xp)
     insert2 = xp + 5
     updatesq1 = """ UPDATE users SET experience = %s WHERE user_id = %s; """
     cur.execute(updatesq1, insert2, 'm')
