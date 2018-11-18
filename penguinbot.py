@@ -13,8 +13,8 @@ bot = commands.Bot(command_prefix='#')
 
 cur = conn.cursor()
 r = """ CREATE TABLE users (
-        user_id TEXT
-        experience INT
+        user_id TEXT,
+        experience INT,
         level INT);"""
 cur.execute(r)
 conn.commit()
