@@ -49,7 +49,7 @@ async def on_message(message):
         sq2 = """ INSERT INTO users (user_id, experience, level) VALUES (%s, %s, %s)"""
         insert = (m, 0, 1)
         cur.execute(sq2, insert)
-        cur.commit()
+        conn.commit()
     getinfo = """SELECT experience FROM users WHERE user_id = message.author.id; """
     print("work2")
     cur.execute(getinfo)
@@ -57,7 +57,7 @@ async def on_message(message):
     insert2 = xp + 5
     updatesq1 = """ UPDATE users SET experience WHERE user_id = message.author.id; """
     cur.execute(updatesq1, insert2)
-    cur.commit()
+    conn.commit()
     print(xp, insert2)
     if conn:
         cur.close()
