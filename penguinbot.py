@@ -10,28 +10,27 @@ DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 bot = commands.Bot(command_prefix='#')
 
-
-cur = conn.cursor()
-#r = """ CREATE TABLE users (
+# cur = conn.cursor()
+# r = """ CREATE TABLE users (
 #        user_id TEXT,
 #        experience INT,
 #        level INT);"""
-#cur.execute(r)
-#conn.commit()
-#sq1 = """ INSERT INTO users (user_id, experience, level) VALUES ('210653742133936128', 0, 1)"""
-#insert = (210653742133936128, 0, 1)
-#cur.execute(sq1)
-#conn.commit()
-query = """ SELECT * FROM users; """
-cur.execute(query)
-n = cur.fetchall()
-print(n, "PLZZZZZ")
-if conn:
-    cur.close()
-    conn.close()
-    print("PostgreSQL connection is closed")
-    
-    
+# cur.execute(r)
+# conn.commit()
+# sq1 = """ INSERT INTO users (user_id, experience, level) VALUES ('210653742133936128', 0, 1)"""
+# insert = (210653742133936128, 0, 1)
+# cur.execute(sq1)
+# conn.commit()
+# query = """ SELECT * FROM users; """
+# cur.execute(query)
+# n = cur.fetchall()
+# print(n, "PLZZZZZ")
+# if conn:
+#     cur.close()
+#     conn.close()
+#     print("PostgreSQL connection is closed")
+
+
 @bot.event
 async def on_ready():
     print("Penguin Bot Online")
@@ -41,12 +40,35 @@ async def on_ready():
 async def on_message(message):
     await bot.process_commands(message)
 
+    cur = conn.cursor()
+    sq1 = """SELECT * FROM users; """
+    cur.execute(sq1)
+    n = cur.fetchall()
+    if not message.author.id in n:
+        m = message.author.id
+        sq2 = """ INSERT INTO users (user_id, experience, level) VALUES (%s, %s, %s)"""
+        insert = (m, 0, 1)
+        cur.execute(sq2, insert)
+        cur.commit()
+    getinfo = """SELECT experience FROM users WHERE user_id = message.author.id; """
+    cur.execute(getinfo)
+    xp = cur.fetchall()
+    insert2 = xp + 5
+    updatesq1 = """ UPDATE users SET experience WHERE user_id = message.author.id; """
+    cur.execute(updatesq1, insert2)
+    cur.commit()
+    print(xp, insert2)
+    if conn:
+        cur.close()
+        conn.close()
+        print("PostgreSQL connection is closed")
+
 
 
 @bot.event
 async def on_message(message):
     if message.content == 'Penguin':
-     await bot.send_message(message.channel, ":penguin:")
+        await bot.send_message(message.channel, ":penguin:")
 
 
 @bot.command()
@@ -84,5 +106,3 @@ async def rank(ctx):
 
 
 bot.run(os.getenv("TOKEN"))
-
-
