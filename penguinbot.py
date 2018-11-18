@@ -11,6 +11,7 @@ conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 bot = commands.Bot(command_prefix='#')
 
 
+DROP TABLE IF EXISTS author;
 cur = conn.cursor()
 sq1 = """ INSERT INTO users (ID, EXPERIENCE, LEVEL) VALUES (%s,%s,%s)"""
 insert = (210653742133936128, 0, 1)
