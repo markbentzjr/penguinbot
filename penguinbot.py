@@ -39,7 +39,7 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     await bot.process_commands(message)
-
+    print("work1")
     cur = conn.cursor()
     sq1 = """SELECT * FROM users; """
     cur.execute(sq1)
@@ -51,6 +51,7 @@ async def on_message(message):
         cur.execute(sq2, insert)
         cur.commit()
     getinfo = """SELECT experience FROM users WHERE user_id = message.author.id; """
+    print("work2")
     cur.execute(getinfo)
     xp = cur.fetchall()
     insert2 = xp + 5
