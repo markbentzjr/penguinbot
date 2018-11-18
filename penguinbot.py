@@ -53,7 +53,7 @@ async def on_message(message):
     getinfo = """SELECT experience FROM users WHERE user_id = %s; """
     print("work2")
     cur.execute(getinfo, 'm')
-    xp = cur.fetchall()
+    xp = cur.fetchone()
     print(xp)
     insert2 = xp + 5
     updatesq1 = """ UPDATE users SET experience = %s WHERE user_id = %s; """
