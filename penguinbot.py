@@ -14,7 +14,7 @@ bot = commands.Bot(command_prefix='#')
 cur = conn.cursor()
 sq1 = """ INSERT INTO users (user_id, experience, level) VALUES (%s,%s,%s)"""
 insert = (210653742133936128, 0, 1)
-cur.execute(sq1, insert)
+cur.execute(sq1, (insert,))
 conn.commit()
 count = cur.rowcount
 print(count, "Record inserted successfully into mobile table")
