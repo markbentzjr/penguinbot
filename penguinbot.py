@@ -26,7 +26,7 @@ conn.commit()
 # n = cur.fetchall()
 # print(n, "PLZZZZZ")
 if conn:
-     cur.close()
+    cur.close()
     conn.close()
     print("PostgreSQL connection is closed")
 
