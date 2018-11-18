@@ -67,6 +67,7 @@ async def on_message(message):
 
 @bot.event
 async def on_message(message):
+    await bot.process_commands(message)
     if message.content == 'Penguin':
         await bot.send_message(message.channel, ":penguin:")
 
