@@ -30,7 +30,7 @@ async def on_message(message):
             cursor.execute("SELECT users_id, users_experience FROM users ORDER BY users_experience")
             rows = cursor.fetchall()
             print("The number of users: ", cursor.rowcount)
-            if not message.author.id in users_id
+            if not message.author.id in users_id:
                 postgres_insert_query = """ INSERT INTO users (ID, EXPERIENCE, LEVEL) VALUES (%s,%s,%s)"""
                 record_to_insert = (message.author.id, 0, 1)
                 cursor.execute(postgres_insert_query, record_to_insert)
