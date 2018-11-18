@@ -18,11 +18,8 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     await bot.process_commands(message)
-    if message.content == 'Penguin':
-        await bot.send_message(message.channel, ":penguin:")
-
- async def check_user(users_id, message):
-     connection=None
+    async def check_user(users_id):
+        connection=None
         try:
             connection = psycopg2.connect(user="ifdvmdjrmodlah",
                                           password="42f5736ca2b49f5276f85a933a89ae495f65310a5c13ee3cefe45d5a5a5d7955",
@@ -32,7 +29,7 @@ async def on_message(message):
             cursor = connection.cursor()
             cursor.execute("SELECT users_id, users_experience FROM users ORDER BY users_experience")
             rows = cursor.fetchall()
-            print("The number of users: ", cur.rowcount)
+            print("The number of users: ", cursor.rowcount)
              if not message.author.id in users_id
                 postgres_insert_query = """ INSERT INTO users (ID, EXPERIENCE, LEVEL) VALUES (%s,%s,%s)"""
                 record_to_insert = (message.author.id, 0, 1)
@@ -79,6 +76,11 @@ async def on_message(message):
                 connection.close()
                 print("PostgreSQL connection is closed")
 
+@bot.event
+async def on_message(message):
+    if message.content == 'Penguin':
+     await bot.send_message(message.channel, ":penguin:")
+
 
 @bot.command()
 async def ping():
@@ -115,4 +117,5 @@ async def rank(ctx):
 
 
 bot.run(os.getenv("TOKEN"))
+
 
