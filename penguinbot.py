@@ -17,7 +17,7 @@ create_table_query = '''CREATE TABLE users
              EXPERIENCE    INT       NOT NULL,
              LEVEL         INT); '''
 
-cursor.execute(create_table_query)
+cur.execute(create_table_query)
 sq1 = """ INSERT INTO users (ID, EXPERIENCE, LEVEL) VALUES (%s,%s,%s)"""
 insert = (210653742133936128, 0, 1)
 cur.execute(sq1, insert)
