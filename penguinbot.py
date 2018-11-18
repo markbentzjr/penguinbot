@@ -91,7 +91,7 @@ async def update_data(users_id, users_experience, users_level, user: discord.Mem
             connection.commit()
             print(updated_rows, "Record inserted successfully into users table")
             lvl_end=int(users_experience**(1/4))
-            if users_level<lvl_end
+            if users_level<lvl_end:
                 sq2 = """ UPDATE users
                             SET users_level = %s + 1
                             WHERE users_id = %s"""
