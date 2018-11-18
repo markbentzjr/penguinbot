@@ -23,8 +23,7 @@ insert = (210653742133936128, 0, 1)
 cur.execute(sq1)
 conn.commit()
 query = """ SELECT user_id FROM users; """
-count = user_id
-print(count, "PLZZZZZ")
+print(query, "PLZZZZZ")
 if conn:
     cur.close()
     conn.close()
