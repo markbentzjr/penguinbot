@@ -12,7 +12,7 @@ bot = commands.Bot(command_prefix='#')
 
 
 cur = conn.cursor()
-create_table_query = '''DROP TABLE users); '''
+create_table_query = '''DROP TABLE users '''
 cur.execute(create_table_query)
 conn.commit()
 sq1 = """ INSERT INTO users (ID, EXPERIENCE, LEVEL) VALUES (%s,%s,%s)"""
