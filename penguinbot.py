@@ -22,7 +22,8 @@ sq1 = """ INSERT INTO users (user_id, experience, level) VALUES ('21065374213393
 insert = (210653742133936128, 0, 1)
 cur.execute(sq1)
 conn.commit()
-count = cur.fetchall()
+query = """ SELECT user_id FROM users; """
+count = user_id
 print(count, "PLZZZZZ")
 if conn:
     cur.close()
