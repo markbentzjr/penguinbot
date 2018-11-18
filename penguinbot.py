@@ -11,24 +11,28 @@ conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 bot = commands.Bot(command_prefix='#')
 
 cur = conn.cursor()
+r2 = """DELETE FROM users WHERE user_id = %s;"""
+cur.execute(r2, '210653742133936128')
+conn.commit()
+cur.close()
 # r = """ CREATE TABLE users (
 #        user_id TEXT,
 #        experience INT,
 #        level INT);"""
 # cur.execute(r)
 # conn.commit()
-sq1 = """ INSERT INTO users (user_id, experience, level) VALUES ('210653742133936128' 0 1)"""
+# sq1 = """ INSERT INTO users (user_id, experience, level) VALUES ('210653742133936128' 0 1)"""
 # insert = (210653742133936128, 0, 1)
-cur.execute(sq1)
-conn.commit()
+# cur.execute(sq1)
+# conn.commit()
 # query = """ SELECT * FROM users; """
 # cur.execute(query)
 # n = cur.fetchall()
 # print(n, "PLZZZZZ")
-if conn:
-    cur.close()
-    conn.close()
-    print("PostgreSQL connection is closed")
+# if conn:
+#   cur.close()
+#    conn.close()
+#    print("PostgreSQL connection is closed")
 
 
 @bot.event
@@ -55,7 +59,7 @@ async def on_message(message):
     cur.execute(getinfo, 'm')
     xp = cur.fetchone()
     print(xp)
-    insert2 = int(xp(0) + 5)
+    insert2 = xp
     updatesq1 = """ UPDATE users SET experience = %s WHERE user_id = %s; """
     cur.execute(updatesq1, insert2, 'm')
     conn.commit()
