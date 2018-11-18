@@ -7,10 +7,23 @@ import os
 import psycopg2
 
 DATABASE_URL = os.environ['DATABASE_URL']
-
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 bot = commands.Bot(command_prefix='#')
 
 
+cur = conn.cursor()
+sq1 = """ INSERT INTO users (ID, EXPERIENCE, LEVEL) VALUES (%s,%s,%s)"""
+insert = (210653742133936128, 0, 1)
+cur.execute(sq1, insert)
+conn.commit()
+count = cur.rowcount
+print(count, "Record inserted successfully into mobile table")
+if conn:
+    cur.close()
+    conn.close()
+    print("PostgreSQL connection is closed")
+    
+    
 @bot.event
 async def on_ready():
     print("Penguin Bot Online")
