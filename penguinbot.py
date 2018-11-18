@@ -22,12 +22,12 @@ try:
           (ID INT PRIMARY KEY     NOT NULL,
           MODEL           TEXT    NOT NULL,
           PRICE         REAL); '''
-        postgres_insert_query = """ INSERT INTO mobile (ID, MODEL, PRICE) VALUES (%s,%s,%s)"""
-        record_to_insert = (5, 'One Plus 6', 950)
-        cursor.execute(postgres_insert_query, record_to_insert)
-   connection.commit()
-   count = cursor.rowcount
-   print (count, "Record inserted successfully into mobile table")
+    postgres_insert_query = """ INSERT INTO mobile (ID, MODEL, PRICE) VALUES (%s,%s,%s)"""
+    record_to_insert = (5, 'One Plus 6', 950)
+    cursor.execute(postgres_insert_query, record_to_insert)
+    connection.commit()
+    count = cursor.rowcount
+    print (count, "Record inserted successfully into mobile table")
 except (Exception, psycopg2.DatabaseError) as error :
     print ("Error while creating PostgreSQL table", error)
 finally:
