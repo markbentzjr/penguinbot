@@ -14,7 +14,6 @@ bot = commands.Bot(command_prefix='#')
 @bot.event
 async def on_ready():
     print("Penguin Bot Online")
-async def create_user_table():
     try:
         connection = psycopg2.connect(user="ifdvmdjrmodlah",
                                   password="42f5736ca2b49f5276f85a933a89ae495f65310a5c13ee3cefe45d5a5a5d7955",
