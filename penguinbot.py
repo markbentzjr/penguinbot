@@ -22,7 +22,7 @@ cur = conn.cursor()
 #insert = (210653742133936128, 0, 1)
 #cur.execute(sq1)
 #conn.commit()
-query = """ SELECT user_id FROM users; """
+query = """ SELECT * FROM users; """
 cur.execute(query)
 n = cur.fetchall()
 print(n, "PLZZZZZ")
