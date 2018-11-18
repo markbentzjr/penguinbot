@@ -12,7 +12,8 @@ bot = commands.Bot(command_prefix='#')
 
 cur = conn.cursor()
 r2 = """DELETE FROM users WHERE user_id = %s;"""
-cur.execute(r2, '210653742133936128')
+me = '210653742133936128'
+cur.execute(r2, me)
 conn.commit()
 cur.close()
 # r = """ CREATE TABLE users (
