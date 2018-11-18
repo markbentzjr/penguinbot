@@ -12,7 +12,10 @@ bot = commands.Bot(command_prefix='#')
 
 
 cur = conn.cursor()
-r = """ DROP TABLE users """
+r = """ CREATE TABLE users (
+        user_id TEXT
+        experience INT
+        level INT);"""
 cur.execute(r)
 conn.commit()
 sq1 = """ INSERT INTO users (user_id, experience, level) VALUES ('210653742133936128', 0, 1)"""
