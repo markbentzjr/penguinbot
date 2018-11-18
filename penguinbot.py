@@ -10,6 +10,38 @@ DATABASE_URL = os.environ['DATABASE_URL']
 
 bot = commands.Bot(command_prefix='#')
 
+async def create_user_table():
+    """ create tables in the PostgreSQL database"""
+    commands = (
+        """
+        CREATE TABLE users (
+            users_id SERIAL PRIMARY KEY,
+            EXPERIENCE INTEGER NOT NULL
+            LEVEL INTEGER NOT NULL
+        )
+        """)
+    connection = None
+    try:
+        connection = psycopg2.connect(user="ifdvmdjrmodlah",
+                                      password="42f5736ca2b49f5276f85a933a89ae495f65310a5c13ee3cefe45d5a5a5d7955",
+                                      host="ec2-50-17-203-51.compute-1.amazonaws.com",
+                                      port="5432",
+                                      database="d1retcdgg1t1jc")
+        cursor = connection.cursor()
+    for command in commands:
+        cursor.execute(command)
+        # close communication with the PostgreSQL database server
+    cursor.close()
+    # commit the changes
+    connection.commit()
+    except(Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if connection is not None:
+             connection.close()
+
+
+
 @bot.event
 async def on_ready():
     print("Penguin Bot Online")
