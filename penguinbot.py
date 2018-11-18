@@ -11,9 +11,9 @@ conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 bot = commands.Bot(command_prefix='#')
 
 cur = conn.cursor()
-r2 = """DELETE FROM users WHERE user_id = %s;"""
+r2 = """DELETE FROM users WHERE user_id = '210653742133936128';"""
 me = '210653742133936128'
-cur.execute(r2, me)
+cur.execute(r2)
 conn.commit()
 cur.close()
 # r = """ CREATE TABLE users (
