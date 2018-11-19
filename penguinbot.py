@@ -46,6 +46,10 @@ async def on_message(message):
     await bot.process_commands(message)
     print("work1")
     cur = conn.cursor()
+    del = """ DELETE FROM users WHERE user_id = %s; """
+    g = 'm'
+    cur.execute(del, (g,))
+    conn.commit()
     sq1 = """SELECT * FROM users; """
     cur.execute(sq1)
     n = cur.fetchall()
@@ -59,16 +63,16 @@ async def on_message(message):
         conn.commit()
     getinfo = """SELECT experience FROM users WHERE user_id = %s; """
     print(m)
-    cur.execute(getinfo, (m))
+    cur.execute(getinfo, (m,))
     xp = cur.fetchone()
     print(xp)
     insert2 = xp[0] + 5
     updatesq1 = """ UPDATE users SET experience = %s WHERE user_id = %s; """
-    cur.execute(updatesq1, (insert2, m))
+    cur.execute(updatesq1, (insert2, m,))
     conn.commit()
     print(xp, insert2, m)
     updatesq2 = """ SELECT level FROM users WHERE user_id = %s; """
-    cur.execute(updatesq2, (m))
+    cur.execute(updatesq2, (m,))
     lvl_start = cur.fetchone()
     lvl_end = int(lvl_start[0]**(1/4))
     print(lvl_start, lvl_end)
