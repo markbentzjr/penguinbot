@@ -65,9 +65,9 @@ async def on_message(message):
     updatesq1 = """ UPDATE users SET experience = %s WHERE user_id = %s; """
     cur.execute(updatesq1, (insert2, m))
     conn.commit()
-    print(xp, insert2, m)
+    print(xp, insert2, mstr)
     updatesq2 = """ SELECT level FROM users WHERE user_id = %s; """
-    cur.execute(updatesq2, m)
+    cur.execute(updatesq2, mstr)
     lvl_start = cur.fetchone()
     lvl_end = int(level_start[0]**(1/4))
     print(lvl_start, lvl_end)
