@@ -88,8 +88,8 @@ async def ping():
 
     
 @bot.command(pass_context=True)
-async def join(ctx.message):
-    if not message.author.id in n:
+async def join(ctx):
+    if not ctx.message.author.id in n:
         sq2 = """ INSERT INTO users (user_id, experience, level) VALUES (%s, %s, %s)"""
         insert = (m, 5, 1)
         cur.execute(sq2, (insert))
