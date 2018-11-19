@@ -45,6 +45,7 @@ async def on_ready():
 async def on_message(message):
     await bot.process_commands(message)
     print("work1")
+    m = "{}".format(message.author.id)
     cur = conn.cursor()
     deltab = """ DELETE FROM users WHERE user_id = %s; """
     g = m
@@ -54,7 +55,6 @@ async def on_message(message):
     cur.execute(sq1)
     n = cur.fetchall()
     print(n)
-    m = "{}".format(message.author.id)
     if not message.author.id in n:
         sq2 = """ INSERT INTO users (user_id, experience, level) VALUES (%s, %s, %s)"""
         insert = (m, 5, 1)
