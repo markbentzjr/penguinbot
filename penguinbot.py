@@ -124,10 +124,15 @@ async def profile(ctx, user: discord.Member):
 
 @bot.command(pass_context=True)
 async def rank(ctx):
-    with open("users.json", "r") as f:
-        users = json.load(f)
-    rank = users[ctx.message.author.id]['level']
+    m = "{}".format(ctx.message.author.id)
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    cur = conn.cursor()
+    updatesq3 = """ SELECT level FROM users WHERE user_id = %s; """
+    cur.execute(updatesq3, (m,))
+    rank = cur.fetchone()
     await bot.say("{} you are rank {}!".format(ctx.message.author, rank))
+    cur.close()
+    conn.close()
 
 
 bot.run(os.getenv("TOKEN"))
