@@ -86,9 +86,9 @@ async def on_message(message):
 async def ping():
     await bot.say('pong')
 
-@bot.command()
-async def join(): 
-        m = "{}".format(message.author.id)
+@bot.command(pass_context=True)
+async def join(ctx): 
+        m = "{}".format(ctx.message.author.id)
         sq2 = """ INSERT INTO users (user_id, experience, level) VALUES (%s, %s, %s)"""
         insert = (m, 5, 1)
         cur.execute(sq2, (insert))
