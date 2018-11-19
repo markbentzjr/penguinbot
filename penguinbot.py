@@ -71,7 +71,7 @@ async def on_message(message):
     lvl_start = cur.fetchone()
     lvl_end = (exp**(1/4))
     print(lvl_start, lvl_end)
-    if lvl_start < lvl_end:
+    if lvl_start[0] < lvl_end:
         await bot.send_message(message.channel, "{} has leveled up to level {}".format(user.mention, lvl_end))
         update_lvl = """ UPDATE users SET level = %s WHERE user_id = %s; """
         cur.execute(update_lvl, (lvl_end, m))
