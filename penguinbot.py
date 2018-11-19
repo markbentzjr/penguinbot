@@ -10,12 +10,12 @@ DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 bot = commands.Bot(command_prefix='#')
 
-cur = conn.cursor()
-r2 = """DELETE FROM users WHERE user_id = %s;"""
+#cur = conn.cursor()
+#r2 = """DELETE FROM users WHERE user_id = %s;"""
 #me = '210653742133936128'
-cur.execute(r2)
-conn.commit()
-cur.close()
+#cur.execute(r2)
+#conn.commit()
+#cur.close()
 # r = """ CREATE TABLE users (
 #        user_id TEXT,
 #        experience INT,
@@ -47,9 +47,9 @@ async def on_message(message):
     m = "{}".format(message.author.id)
     print("work1")
     cur = conn.cursor()
-#    delt = """ DELETE FROM users WHERE user_id; """
-#    cur.execute(delt, (m,))
-#    conn.commit()
+    delt = """ DELETE FROM users WHERE user_id = %s; """
+    cur.execute(delt, (m,))
+    conn.commit()
     sq1 = """SELECT user_id FROM users; """
     cur.execute(sq1)
     n = cur.fetchall()
