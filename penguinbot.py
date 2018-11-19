@@ -10,12 +10,12 @@ DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 bot = commands.Bot(command_prefix='#')
 
-cur = conn.cursor()
-r2 = """DELETE FROM users WHERE user_id = '210653742133936128';"""
-me = '210653742133936128'
-cur.execute(r2)
-conn.commit()
-cur.close()
+#cur = conn.cursor()
+#r2 = """DELETE FROM users;"""
+#me = '210653742133936128'
+#cur.execute(r2)
+#conn.commit()
+#cur.close()
 # r = """ CREATE TABLE users (
 #        user_id TEXT,
 #        experience INT,
@@ -62,7 +62,7 @@ async def on_message(message):
     print(xp)
     insert2 = xp
     updatesq1 = """ UPDATE users SET experience = %s WHERE user_id = %s; """
-    cur.execute(updatesq1, insert2, 'm')
+    cur.execute(updatesq1, (insert2 + 5, 'm'))
     conn.commit()
     print(xp, insert2, 'm')
     if conn:
