@@ -48,9 +48,9 @@ async def on_message(message):
     m = "{}".format(message.author.id)
     print("work1")
     cur = conn.cursor()
-    delt = """ DELETE FROM users WHERE user_id = %s; """
-    cur.execute(delt, (m,))
-    conn.commit()
+#    delt = """ DELETE FROM users WHERE user_id = %s; """
+#    cur.execute(delt, (m,))
+#    conn.commit()
     sq1 = """SELECT user_id FROM users; """
     cur.execute(sq1)
     n = cur.fetchall()
@@ -77,6 +77,7 @@ async def on_message(message):
         conn.commit()
     if conn:
         cur.close()
+        conn.close()
         print("PostgreSQL cursor is closed")
     if message.content == 'Penguin':
         await bot.send_message(message.channel, ":penguin:")
@@ -87,12 +88,16 @@ async def ping():
     await bot.say('pong')
 
 @bot.command(pass_context=True)
-async def join(ctx): 
+async def join(ctx):
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         m = "{}".format(ctx.message.author.id)
+        cur = conn.cursor()
         sq2 = """ INSERT INTO users (user_id, experience, level) VALUES (%s, %s, %s)"""
         insert = (m, 5, 1)
         cur.execute(sq2, (insert))
         conn.commit()
+        cur.close()
+        conn.close()
 
 @bot.command(pass_context=True)
 async def embed(ctx):
