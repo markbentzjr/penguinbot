@@ -7,7 +7,7 @@ import os
 import psycopg2
 
 DATABASE_URL = os.environ['DATABASE_URL']
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
 bot = commands.Bot(command_prefix='#')
 
 #cur = conn.cursor()
@@ -44,21 +44,17 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     await bot.process_commands(message)
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     m = "{}".format(message.author.id)
     print("work1")
     cur = conn.cursor()
-#    delt = """ DELETE FROM users WHERE user_id = %s; """
-#   cur.execute(delt, (m,))
-#    conn.commit()
+    delt = """ DELETE FROM users WHERE user_id = %s; """
+    cur.execute(delt, (m,))
+    conn.commit()
     sq1 = """SELECT user_id FROM users; """
     cur.execute(sq1)
     n = cur.fetchall()
     print(n)
-    if not message.author.id in n:
-        sq2 = """ INSERT INTO users (user_id, experience, level) VALUES (%s, %s, %s)"""
-        insert = (m, 5, 1)
-        cur.execute(sq2, (insert))
-        conn.commit()
     getinfo = """SELECT experience FROM users WHERE user_id = %s; """
     print(m)
     cur.execute(getinfo, (m,))
@@ -71,7 +67,7 @@ async def on_message(message):
     print(xp, insert2, m)
     updatesq2 = """ SELECT level FROM users WHERE user_id = %s; """
     cur.execute(updatesq2, (m,))
-    lvl_start = cur.fetchone()
+    lvl_start = insert2
     lvl_end = int(lvl_start[0]**(1/4))
     print(lvl_start, lvl_end)
     if lvl_start[0] < lvl_end:
@@ -81,7 +77,7 @@ async def on_message(message):
         conn.commit()
     if conn:
         cur.close()
-        print("PostgreSQL connection is closed")
+        print("PostgreSQL cursor is closed")
     if message.content == 'Penguin':
         await bot.send_message(message.channel, ":penguin:")
 
@@ -90,8 +86,13 @@ async def on_message(message):
 async def ping():
     await bot.say('pong')
 
-    
-
+@bot.command()
+async def join(): 
+        m = "{}".format(message.author.id)
+        sq2 = """ INSERT INTO users (user_id, experience, level) VALUES (%s, %s, %s)"""
+        insert = (m, 5, 1)
+        cur.execute(sq2, (insert))
+        conn.commit()
 
 @bot.command(pass_context=True)
 async def embed(ctx):
