@@ -46,9 +46,9 @@ async def on_message(message):
     await bot.process_commands(message)
     print("work1")
     cur = conn.cursor()
-    del = """ DELETE FROM users WHERE user_id = %s; """
+    deltab = """ DELETE FROM users WHERE user_id = %s; """
     g = 'm'
-    cur.execute(del, (g,))
+    cur.execute(deltab, (g,))
     conn.commit()
     sq1 = """SELECT * FROM users; """
     cur.execute(sq1)
