@@ -47,9 +47,9 @@ async def on_message(message):
     m = "{}".format(message.author.id)
     print("work1")
     cur = conn.cursor()
-    delt = """ DELETE FROM users WHERE user_id = %s; """
-    cur.execute(delt, (m,))
-    conn.commit()
+#    delt = """ DELETE FROM users WHERE user_id = %s; """
+#   cur.execute(delt, (m,))
+#    conn.commit()
     sq1 = """SELECT user_id FROM users; """
     cur.execute(sq1)
     n = cur.fetchall()
