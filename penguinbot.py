@@ -54,6 +54,11 @@ async def on_message(message):
     cur.execute(sq1)
     n = cur.fetchall()
     print(n)
+    if not message.author.id in n:
+        sq2 = """ INSERT INTO users (user_id, experience, level) VALUES (%s, %s, %s)"""
+        insert = (m, 5, 1)
+        cur.execute(sq2, (insert))
+        conn.commit()
     getinfo = """SELECT experience FROM users WHERE user_id = %s; """
     print(m)
     cur.execute(getinfo, (m,))
@@ -87,13 +92,7 @@ async def ping():
     await bot.say('pong')
 
     
-@bot.command(pass_context=True)
-async def join(ctx):
-    if not ctx.message.author.id in n:
-        sq2 = """ INSERT INTO users (user_id, experience, level) VALUES (%s, %s, %s)"""
-        insert = (m, 5, 1)
-        cur.execute(sq2, (insert))
-        conn.commit()
+
 
 @bot.command(pass_context=True)
 async def embed(ctx):
