@@ -130,7 +130,7 @@ async def rank(ctx):
     updatesq3 = """ SELECT level FROM users WHERE user_id = %s; """
     cur.execute(updatesq3, (m,))
     rank = cur.fetchone()
-    await bot.say("{} you are rank {}!".format(ctx.message.author, rank))
+    await bot.say("{} you are rank {}!".format(ctx.message.author.mention, rank[0]))
     cur.close()
     conn.close()
 
