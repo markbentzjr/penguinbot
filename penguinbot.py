@@ -66,11 +66,6 @@ async def on_message(message):
     cur.execute(updatesq1, (insert2, m))
     conn.commit()
     print(xp, insert2, m)
-    if conn:
-        cur.close()
-        conn.close()
-        print("PostgreSQL connection is closed")
-    cur = conn.cursor()
     updatesq2 = """ SELECT level FROM users WHERE user_id = %s; """
     cur.execute(updatesq2, m)
     lvl_start = cur.fetchone()
@@ -81,10 +76,10 @@ async def on_message(message):
         update_lvl = """ UPDATE users SET level = %s WHERE user_id = %s; """
         cur.execute(update_lvl, (lvl_end, m))
         conn.commit()
-        if conn:
-          cur.close()
-          conn.close()
-          print("PostgreSQL connection is closed")
+    if conn:
+        cur.close()
+        conn.close()
+        print("PostgreSQL connection is closed")
     if message.content == 'Penguin':
         await bot.send_message(message.channel, ":penguin:")
 
