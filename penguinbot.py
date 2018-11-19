@@ -80,6 +80,10 @@ async def on_message(message):
         update_lvl = """ UPDATE users SET level = %s WHERE user_id = %s; """
         cur.execute(update_lvl, (lvl_end, m))
         conn.commit()
+        if conn:
+          cur.close()
+          conn.close()
+          print("PostgreSQL connection is closed")
     if message.content == 'Penguin':
         await bot.send_message(message.channel, ":penguin:")
 
