@@ -60,7 +60,7 @@ async def on_message(message):
     cur.execute(getinfo, 'm')
     xp = cur.fetchone()
     print(xp)
-    insert2 = xp
+    insert2 = xp[0]
     updatesq1 = """ UPDATE users SET experience = %s WHERE user_id = %s; """
     cur.execute(updatesq1, (insert2 + 5, 'm'))
     conn.commit()
