@@ -49,26 +49,37 @@ async def on_message(message):
     sq1 = """SELECT * FROM users; """
     cur.execute(sq1)
     n = cur.fetchall()
-    m = message.author.id
+    m = '{}'.format(message.author.id)
     if not message.author.id in n:
         sq2 = """ INSERT INTO users (user_id, experience, level) VALUES (%s, %s, %s)"""
-        insert = ('m', 5, 1)
+        insert = (m, 5, 1)
         cur.execute(sq2, insert)
         conn.commit()
     getinfo = """SELECT experience FROM users WHERE user_id = %s; """
     print("work2")
-    cur.execute(getinfo, 'm')
+    cur.execute(getinfo, m)
     xp = cur.fetchone()
     print(xp)
     insert2 = xp[0] + 5
     updatesq1 = """ UPDATE users SET experience = %s WHERE user_id = %s; """
-    cur.execute(updatesq1, (insert2, 'm'))
+    cur.execute(updatesq1, (insert2, m))
     conn.commit()
-    print(xp, insert2, 'm')
+    print(xp, insert2, m)
     if conn:
         cur.close()
         conn.close()
         print("PostgreSQL connection is closed")
+    cur = conn.cursor()
+    updatesq2 = """ SELECT level FROM users WHERE user_id = %s; """
+    cur.execute(updatesq2, m)
+    lvl_start = cur.fetchone()
+    lvl_end = int(level_start[0]**(1/4))
+    print(lvl_start, lvl_end)
+    if lvl_start[0] < lvl_end:
+        await bot.send_message(channel, "{} has leveled up to level {}".format(user.mention, lvl_end))
+        update_lvl = """ UPDATE users SET level = %s WHERE user_id = %s; """
+        cur.execute(update_lvl, (lvl_end, m))
+        conn.commit()
     if message.content == 'Penguin':
         await bot.send_message(message.channel, ":penguin:")
 
