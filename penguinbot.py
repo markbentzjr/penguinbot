@@ -49,14 +49,14 @@ async def on_message(message):
     sq1 = """SELECT * FROM users; """
     cur.execute(sq1)
     n = cur.fetchall()
-    m = '{}'.format(message.author.id)
+    m = "{}".format(message.author.id)
     if not message.author.id in n:
         sq2 = """ INSERT INTO users (user_id, experience, level) VALUES (%s, %s, %s)"""
         insert = (m, 5, 1)
         cur.execute(sq2, insert)
         conn.commit()
     getinfo = """SELECT experience FROM users WHERE user_id = %s; """
-    print("work2")
+    print(m)
     cur.execute(getinfo, m)
     xp = cur.fetchone()
     print(xp)
