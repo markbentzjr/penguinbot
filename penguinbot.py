@@ -47,7 +47,7 @@ async def on_message(message):
     print("work1")
     cur = conn.cursor()
     deltab = """ DELETE FROM users WHERE user_id = %s; """
-    g = 'm'
+    g = m
     cur.execute(deltab, (g,))
     conn.commit()
     sq1 = """SELECT * FROM users; """
@@ -55,7 +55,6 @@ async def on_message(message):
     n = cur.fetchall()
     print(n)
     m = "{}".format(message.author.id)
-    mstr = "m"
     if not message.author.id in n:
         sq2 = """ INSERT INTO users (user_id, experience, level) VALUES (%s, %s, %s)"""
         insert = (m, 5, 1)
