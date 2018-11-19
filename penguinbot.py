@@ -50,14 +50,15 @@ async def on_message(message):
     cur.execute(sq1)
     n = cur.fetchall()
     m = "{}".format(message.author.id)
+    mstr = "m"
     if not message.author.id in n:
         sq2 = """ INSERT INTO users (user_id, experience, level) VALUES (%s, %s, %s)"""
-        insert = (m, 5, 1)
+        insert = (mstr, 5, 1)
         cur.execute(sq2, insert)
         conn.commit()
     getinfo = """SELECT experience FROM users WHERE user_id = %s; """
-    print(m)
-    cur.execute(getinfo, m)
+    print(mstr)
+    cur.execute(getinfo, mstr)
     xp = cur.fetchone()
     print(xp)
     insert2 = xp[0] + 5
