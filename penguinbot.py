@@ -44,18 +44,16 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     await bot.process_commands(message)
-    print("work1")
     m = "{}".format(message.author.id)
+    print("work1")
     cur = conn.cursor()
+    delt = """ DELETE FROM users WHERE user_id = %s; """
+    cur.execute(delt, (m,))
+    conn.commit()
     sq1 = """SELECT * FROM users; """
     cur.execute(sq1)
     n = cur.fetchall()
     print(n)
-    if not message.author.id in n:
-        sq2 = """ INSERT INTO users (user_id, experience, level) VALUES (%s, %s, %s)"""
-        insert = (m, 5, 1)
-        cur.execute(sq2, (insert))
-        conn.commit()
     getinfo = """SELECT experience FROM users WHERE user_id = %s; """
     print(m)
     cur.execute(getinfo, (m,))
@@ -88,6 +86,14 @@ async def on_message(message):
 async def ping():
     await bot.say('pong')
 
+    
+@bot.command(pass_context=True)
+async def join(ctx.message):
+    if not message.author.id in n:
+        sq2 = """ INSERT INTO users (user_id, experience, level) VALUES (%s, %s, %s)"""
+        insert = (m, 5, 1)
+        cur.execute(sq2, (insert))
+        conn.commit()
 
 @bot.command(pass_context=True)
 async def embed(ctx):
