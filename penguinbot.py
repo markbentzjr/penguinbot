@@ -10,12 +10,12 @@ DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 bot = commands.Bot(command_prefix='#')
 
-#cur = conn.cursor()
-#r2 = """DELETE FROM users;"""
+cur = conn.cursor()
+r2 = """DELETE FROM users WHERE user_id = %s;"""
 #me = '210653742133936128'
-#cur.execute(r2)
-#conn.commit()
-#cur.close()
+cur.execute(r2)
+conn.commit()
+cur.close()
 # r = """ CREATE TABLE users (
 #        user_id TEXT,
 #        experience INT,
@@ -50,7 +50,7 @@ async def on_message(message):
 #    delt = """ DELETE FROM users WHERE user_id; """
 #    cur.execute(delt, (m,))
 #    conn.commit()
-    sq1 = """SELECT * FROM users; """
+    sq1 = """SELECT user_id FROM users; """
     cur.execute(sq1)
     n = cur.fetchall()
     print(n)
@@ -79,10 +79,9 @@ async def on_message(message):
         update_lvl = """ UPDATE users SET level = %s WHERE user_id = %s; """
         cur.execute(update_lvl, (lvl_end, m))
         conn.commit()
-#    if conn:
-#        cur.close()
-#        conn.close()
-#        print("PostgreSQL connection is closed")
+    if conn:
+        cur.close()
+        print("PostgreSQL connection is closed")
     if message.content == 'Penguin':
         await bot.send_message(message.channel, ":penguin:")
 
