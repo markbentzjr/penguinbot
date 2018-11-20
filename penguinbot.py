@@ -69,7 +69,7 @@ async def on_message(message):
     cur.execute(updatesq2, (m,))
     exp = insert2
     lvl_start = cur.fetchone()
-    lvl_end = (exp**(1/4))
+    lvl_end = (exp**(1/3))
     print(lvl_start, lvl_end)
     if lvl_start[0] < lvl_end:
         lvl_end = lvl_start[0] + 1
