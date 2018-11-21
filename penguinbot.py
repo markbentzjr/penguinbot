@@ -110,13 +110,14 @@ async def rank(ctx):
     conn.close()
 
 @bot.command(pass_context=True)
-async def leaderboard(ctx):
+async def leaderboard():
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     cur = conn.cursor()
+    server = discord.Server
     updatesq4 = """ SELECT user_id FROM users ORDER BY experience; """
     cur.execute(updatesq4)
     leader = cur.fetchmany(10)
-    await bot.say("@{}".format(leader[0]))
+    await bot.say("{}".format(server.get_member(leader)))
     cur.close()
     conn.close()
 
