@@ -117,7 +117,8 @@ async def leaderboard():
     updatesq4 = """ SELECT user_id FROM users ORDER BY experience DESC; """
     cur.execute(updatesq4)
     leader = cur.fetchmany(10)
-    lead = leader[0]
+    lead = leader
+    print(lead)
     await bot.say("{}".format(server.get_member(lead)))
     cur.close()
     conn.close()
