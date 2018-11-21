@@ -116,10 +116,8 @@ async def leaderboard():
     server = discord.Server
     updatesq4 = """ SELECT user_id FROM users ORDER BY experience DESC; """
     cur.execute(updatesq4)
-    leader = cur.fetchone()
-    lead = server.get_member(leader[0])
-    print(lead)
-    await bot.say("{}".format(lead))
+    leader = cur.fetchmany(10)
+    await bot.say("{}".format(leader))
     cur.close()
     conn.close()
 
