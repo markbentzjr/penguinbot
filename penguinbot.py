@@ -119,7 +119,7 @@ async def leaderboard():
     leader = cur.fetchone()
     lead = leader[0]
     print(lead)
-    await bot.say("{}".format(server.get_member(lead)))
+    await bot.say("{}".format(lead))
     cur.close()
     conn.close()
 
