@@ -10,31 +10,6 @@ DATABASE_URL = os.environ['DATABASE_URL']
 
 bot = commands.Bot(command_prefix='#')
 
-#cur = conn.cursor()
-#r2 = """DELETE FROM users WHERE user_id = %s;"""
-#me = '210653742133936128'
-#cur.execute(r2)
-#conn.commit()
-#cur.close()
-# r = """ CREATE TABLE users (
-#        user_id TEXT,
-#        experience INT,
-#        level INT);"""
-# cur.execute(r)
-# conn.commit()
-# sq1 = """ INSERT INTO users (user_id, experience, level) VALUES ('210653742133936128', 0, 1)"""
-# insert = (210653742133936128, 0, 1)
-# cur.execute(sq1)
-# conn.commit()
-# query = """ SELECT * FROM users; """
-# cur.execute(query)
-# n = cur.fetchall()
-# print(n, "PLZZZZZ")
-# if conn:
-#   cur.close()
-#    conn.close()
-#    print("PostgreSQL connection is closed")
-
 
 @bot.event
 async def on_ready():
@@ -134,5 +109,15 @@ async def rank(ctx):
     cur.close()
     conn.close()
 
+@bot.command(pass_context=True)
+async def leaderboard(ctx):
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    cur = conn.cursor()
+    updatesq4 = """ SELECT user_id FROM users ORDER BY experience; """
+    cur.execute(updatesq4)
+    leader = cur.fetchmany(10)
+    await bot.say("{}".format(leader))
+    cur.close()
+    conn.close()
 
 bot.run(os.getenv("TOKEN"))
