@@ -114,7 +114,7 @@ async def leaderboard():
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     cur = conn.cursor()
     server = discord.Server
-    updatesq4 = """ SELECT CAST(user_id to INTEGER) FROM users ORDER BY experience DESC; """
+    updatesq4 = """ SELECT CAST(user_id AS INTEGER) FROM users ORDER BY experience DESC; """
     cur.execute(updatesq4)
     leader = cur.fetchmany(10)
     await bot.say("{}".format(server.get_member(leader)))
