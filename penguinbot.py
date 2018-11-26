@@ -117,7 +117,7 @@ async def leaderboard():
     updatesq4 = """ SELECT CAST(user_id AS TEXT) FROM users ORDER BY experience DESC; """
     cur.execute(updatesq4)
     leader = cur.fetchone()
-    await bot.say("{}".format(server.get_member(leader)))
+    await bot.say("{}".format(server.get_member((leader))))
     cur.close()
     conn.close()
 
