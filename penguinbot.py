@@ -113,7 +113,7 @@ async def rank(ctx):
 async def leaderboard():
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     cur = conn.cursor()
-    server = discord.Server
+    server = member.server
     updatesq4 = """ SELECT CAST(user_id AS TEXT) FROM users ORDER BY experience DESC; """
     cur.execute(updatesq4)
     leader = cur.fetchone()
