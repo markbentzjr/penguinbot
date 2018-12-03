@@ -2,3 +2,4 @@ discord
 asyncio
 simplejson
 psycopg2-binary
+random
