@@ -5,6 +5,7 @@ from discord.ext import commands
 import json
 import os
 import psycopg2
+import random 
 
 DATABASE_URL = os.environ['DATABASE_URL']
 
@@ -58,8 +59,35 @@ async def on_message(message):
         print("PostgreSQL cursor is closed")
     if message.content == 'Penguin':
         await bot.send_message(message.channel, ":penguin:")
-
-
+    if message.content == 'paper':
+        rpsgame = random.choice(['Rock', 'Paper', 'Scissors'])
+        await bot.send_message(message.channel, "{}".format(rpsgame))
+        if rpsgame == 'Scissors':
+            await bot.send_message(message.channel, "You Lose!")
+        elif rpsgame == 'Rock':
+            await bot.send_message(message.channel, "You Win!")
+        elif rpsgame == 'Paper':
+            await bot.send_message(message.channel, "It's a Draw! Play Again?")
+    if message.content == 'rock':
+        rpsgame = random.choice(['Rock', 'Paper', 'Scissors'])
+        await bot.send_message(message.channel, "{}".format(rpsgame))
+        if rpsgame == 'Paper':
+            await bot.send_message(message.channel, "You Lose!")
+        elif rpsgame == 'Scissors':
+            await bot.send_message(message.channel, "You Win!")
+        elif rpsgame == 'Rock':
+            await bot.send_message(message.channel, "It's a Draw! Play Again?")
+    if message.content == 'scissors':
+        rpsgame = random.choice(['Rock', 'Paper', 'Scissors'])
+        await bot.send_message(message.channel, "{}".format(rpsgame))
+        if rpsgame == 'Rock':
+            await bot.send_message(message.channel, "You Lose!")
+        elif rpsgame == 'Paper':
+            await bot.send_message(message.channel, "You Win!")
+        elif rpsgame == 'Scissors':
+            await bot.send_message(message.channel, "It's a Draw! Play Again?")            
+            
+            
 @bot.command()
 async def ping():
     await bot.say('pong')
