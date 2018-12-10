@@ -7,6 +7,9 @@ import os
 import psycopg2
 import random 
 
+rock = 'rock'
+scissors = 'scissors'
+paper = 'paper'
 DATABASE_URL = os.environ['DATABASE_URL']
 
 bot = commands.Bot(command_prefix='#')
@@ -59,7 +62,7 @@ async def on_message(message):
         print("PostgreSQL cursor is closed")
     if message.content == 'Penguin':
         await bot.send_message(message.channel, ":penguin:")
-    if message.content == 'paper':
+    if message.content == paper.lower():
         rpsgame = random.choice(['Rock', 'Paper', 'Scissors'])
         await bot.send_message(message.channel, "{}".format(rpsgame))
         if rpsgame == 'Scissors':
@@ -68,7 +71,7 @@ async def on_message(message):
             await bot.send_message(message.channel, "You Win!")
         elif rpsgame == 'Paper':
             await bot.send_message(message.channel, "It's a Draw! Play Again?")
-    if message.content == 'rock':
+    if message.content == rock.lower():
         rpsgame = random.choice(['Rock', 'Paper', 'Scissors'])
         await bot.send_message(message.channel, "{}".format(rpsgame))
         if rpsgame == 'Paper':
@@ -77,7 +80,7 @@ async def on_message(message):
             await bot.send_message(message.channel, "You Win!")
         elif rpsgame == 'Rock':
             await bot.send_message(message.channel, "It's a Draw! Play Again?")
-    if message.content == 'scissors':
+    if message.content == scissors.lower():
         rpsgame = random.choice(['Rock', 'Paper', 'Scissors'])
         await bot.send_message(message.channel, "{}".format(rpsgame))
         if rpsgame == 'Rock':
