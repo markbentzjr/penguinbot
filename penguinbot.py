@@ -148,14 +148,11 @@ async def leaderboard(ctx):
     updatesq4 = """ SELECT user_id FROM users ORDER BY experience DESC; """
     cur.execute(updatesq4)
     leader = cur.fetchmany(10)
-    for i, member in enumerate(ctx.message.server.members):
-        list_mem_num = (f'{i}')
-        list_mem_id = (f'{member.id}')
-        list_mem = (f'{member}')
-        list_mem_name = (f'{member.name}')
-        list_all = (f'Number: {list_mem_num} ID: {list_mem_id} Name: {list_mem} ({list_mem_name})\n')
-        if list_mem_id[i] in leader:
-            leader[i] = list_mem_name[i]
+    i = 0
+    for i < 11:
+        userexist = get(bot.get_all_members(), id=leader[i])
+        leader[i] = userexist
+        i = i + 1
     await bot.say("{}".format(leader))
     cur.close()
     conn.close()
