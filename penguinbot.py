@@ -150,9 +150,9 @@ async def leaderboard(ctx):
     leader = cur.fetchmany(10)
     i = 0
     for i in range(0,10):
-        userexist = get(bot.get_all_members(), id=leader[i])
+        userexist = get(bot.get_all_members(), id=leader)
         print(userexist)
-        print(bot.get_all_members)
+        print(bot.get_all_members())
         i = i + 1
     await bot.say("{}".format(userexist))
     cur.close()
