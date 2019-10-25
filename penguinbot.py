@@ -144,16 +144,11 @@ async def rank(ctx):
 async def leaderboard(ctx):
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     cur = conn.cursor()
-    i = 0
-    x = message.server.members.id
+    x = message.server.members
     updatesq4 = """ SELECT user_id FROM users ORDER BY experience DESC; """
     cur.execute(updatesq4)
     leader = cur.fetchmany(10)
-    for i < 11:
-        if leader[i] = x
-            leader[i] = message.server.member
-        i = i + 1
-    await bot.say("{}".format(leader))
+    await bot.say("{}".format(x))
     cur.close()
     conn.close()
 
