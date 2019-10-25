@@ -145,10 +145,10 @@ async def leaderboard(ctx):
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     cur = conn.cursor()
    # server = member.server
-    updatesq4 = """ SELECT * FROM users ORDER BY experience DESC; """
+    updatesq4 = """ SELECT user_id FROM users ORDER BY experience DESC; """
     cur.execute(updatesq4)
     leader = cur.fetchmany(10)
-    await bot.say("{}".format(ctx.message.server.get_member(leader)))
+    await bot.say("{}".format(leader))
     cur.close()
     conn.close()
 
