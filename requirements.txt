@@ -1,4 +1,4 @@
 discord==0.16.12
-asyncio
+asyncio==0.4.1
 simplejson
 psycopg2-binary
