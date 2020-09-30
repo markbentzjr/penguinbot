@@ -23,6 +23,7 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
+    bot = message.channel
     await bot.process_commands(message)
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     m = "{}".format(message.author.id)
@@ -53,7 +54,7 @@ async def on_message(message):
     print(lvl_start, lvl_end)
     if lvl_start[0] < lvl_end:
         lvl_end = lvl_start[0] + 1
-        await bot.send_message(message.channel, "{} has leveled up to level {}".format(message.author.mention, lvl_end))
+        await bot.send(message.channel, "{} has leveled up to level {}".format(message.author.mention, lvl_end))
         update_lvl = """ UPDATE users SET level = %s WHERE user_id = %s; """
         cur.execute(update_lvl, (lvl_end, m))
         conn.commit()
@@ -62,39 +63,40 @@ async def on_message(message):
         conn.close()
         print("PostgreSQL cursor is closed")
     if message.content == 'Penguin':
-        await bot.send_message(message.channel, ":penguin:")
+        await bot.send(message.channel, ":penguin:")
     if message.content == paper.upper().lower():
         rpsgame = random.choice(['Rock', 'Paper', 'Scissors'])
-        await bot.send_message(message.channel, "{}".format(rpsgame))
+        await bot.send(message.channel, "{}".format(rpsgame))
         if rpsgame == 'Scissors':
-            await bot.send_message(message.channel, "You Lose!")
+            await bot.send(message.channel, "You Lose!")
         elif rpsgame == 'Rock':
-            await bot.send_message(message.channel, "You Win!")
+            await bot.send(message.channel, "You Win!")
         elif rpsgame == 'Paper':
-            await bot.send_message(message.channel, "It's a Draw! Play Again?")
+            await bot.send(message.channel, "It's a Draw! Play Again?")
     if message.content == rock.upper().lower():
         rpsgame = random.choice(['Rock', 'Paper', 'Scissors'])
-        await bot.send_message(message.channel, "{}".format(rpsgame))
+        await bot.send(message.channel, "{}".format(rpsgame))
         if rpsgame == 'Paper':
-            await bot.send_message(message.channel, "You Lose!")
+            await bot.send(message.channel, "You Lose!")
         elif rpsgame == 'Scissors':
-            await bot.send_message(message.channel, "You Win!")
+            await bot.send(message.channel, "You Win!")
         elif rpsgame == 'Rock':
-            await bot.send_message(message.channel, "It's a Draw! Play Again?")
+            await bot.send(message.channel, "It's a Draw! Play Again?")
     if message.content == scissors.upper().lower():
         rpsgame = random.choice(['Rock', 'Paper', 'Scissors'])
-        await bot.send_message(message.channel, "{}".format(rpsgame))
+        await bot.send(message.channel, "{}".format(rpsgame))
         if rpsgame == 'Rock':
-            await bot.send_message(message.channel, "You Lose!")
+            await bot.send(message.channel, "You Lose!")
         elif rpsgame == 'Paper':
-            await bot.send_message(message.channel, "You Win!")
+            await bot.send(message.channel, "You Win!")
         elif rpsgame == 'Scissors':
-            await bot.send_message(message.channel, "It's a Draw! Play Again?")            
+            await bot.send(message.channel, "It's a Draw! Play Again?")
             
             
-@bot.command()
-async def ping():
-    await bot.say('pong')
+@bot.command(pass_context=True)
+async def ping(message):
+    bot = message.channel
+    await bot.send('pong')
 
 @bot.command(pass_context=True)
 async def join(ctx):
@@ -110,15 +112,17 @@ async def join(ctx):
 
 @bot.command(pass_context=True)
 async def embed(ctx):
+    bot = ctx.channel
     embed = discord.Embed(title="test", description="penguins", color=0x0000ff)
     embed.set_footer(text="Testing")
     embed.set_author(name="SteelPenguin87")
     embed.add_field(name="Field 1", value="okay", inline=True)
-    await bot.say(embed=embed)
+    await bot.send(embed=embed)
 
 
 @bot.command(pass_context=True)
 async def profile(ctx, user: discord.Member):
+    bot = ctx.channel
     embed = discord.Embed(title="{}'s info".format(user.name), description="You can't hide m8", color=0x0000ff)
     embed.add_field(name="Name", value=user.name, inline=True)
     embed.add_field(name="ID", value=user.id, inline=True)
@@ -126,23 +130,25 @@ async def profile(ctx, user: discord.Member):
     embed.add_field(name="Role", value=user.top_role, inline=True)
     embed.add_field(name="Joined", value=user.joined_at, inline=True)
     embed.set_thumbnail(url=user.avatar_url)
-    await bot.say(embed=embed)
+    await bot.send(embed=embed)
 
 
 @bot.command(pass_context=True)
 async def rank(ctx):
+    bot = ctx.channel
     m = "{}".format(ctx.message.author.id)
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     cur = conn.cursor()
     updatesq3 = """ SELECT level FROM users WHERE user_id = %s; """
     cur.execute(updatesq3, (m,))
     rank = cur.fetchone()
-    await bot.say("{} you are rank {}!".format(ctx.message.author.mention, rank[0]))
+    await bot.send("{} you are rank {}!".format(ctx.message.author.mention, rank[0]))
     cur.close()
     conn.close()
 
 @bot.command(pass_context=True)
 async def leaderboard(ctx):
+    bot = ctx.channel
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     cur = conn.cursor()
     updatesq4 = """ SELECT user_id FROM users ORDER BY experience DESC; """
@@ -150,11 +156,11 @@ async def leaderboard(ctx):
     leader = cur.fetchmany(10)
     i = 0
     for i in range(0,10):
-        userexist = get(Client.get_user(), id=leader[i])
+        userexist = get(bot.get_user(), id=leader[i])
         print(userexist)
-        print(Client.get_user(leader[i]))
+        print(bot.get_user(leader[i]))
         i = i + 1
-    await bot.say("{}".format(userexist))
+    await bot.send("{}".format(userexist))
     cur.close()
     conn.close()
 
