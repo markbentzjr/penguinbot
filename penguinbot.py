@@ -158,4 +158,4 @@ async def leaderboard(ctx):
     cur.close()
     conn.close()
 
-bot.run(os.getenv("TOKEN"))
+bot.run("TOKEN")
