@@ -13,7 +13,7 @@ scissors = 'scissors'
 paper = 'paper'
 DATABASE_URL = os.environ['DATABASE_URL']
 
-bot = commands.Bot(command_prefix='#')
+client = commands.Bot(command_prefix='#')
 
 
 @bot.event
@@ -24,7 +24,7 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     bot = message.channel
-    await bot.process_commands(message)
+    await client.process_commands(message)
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     m = "{}".format(message.author.id)
     print("work1")
