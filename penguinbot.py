@@ -163,7 +163,7 @@ async def leaderboard(ctx):
     print(leader[1])
     i = 0
     for i in range(0,10):
-        userexist = get(bot.get_user(ctx), id=leader[i])
+        userexist = leader[i]
         print(userexist)
         print(bot.get_user(leader[i]))
         i = i + 1
