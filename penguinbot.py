@@ -24,6 +24,7 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     botmsg = message.channel
+    await bot.process_commands(message)
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     m = "{}".format(message.author.id)
     print("work1")
@@ -61,6 +62,8 @@ async def on_message(message):
         cur.close()
         conn.close()
         print("PostgreSQL cursor is closed")
+    if message.author.id != bot.user.id:
+        pass
     if message.content.lower() == 'penguin':
         await botmsg.send(":penguin:")
     if message.content.lower() == paper.lower():
@@ -90,7 +93,6 @@ async def on_message(message):
             await botmsg.send("You Win!")
         elif rpsgame == 'Scissors':
             await botmsg.send("It's a Draw! Play Again?")
-    await bot.process_commands(message)
             
             
 @bot.command(pass_context=True)
