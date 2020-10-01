@@ -172,7 +172,7 @@ async def leaderboard(ctx):
             username = user.name
             leader_users.append(username)
             print(leader_users)
-    await botmsg.send("{}".format(leader_users[1:]))
+    await botmsg.send("{}".format(leader_users[0:]))
     cur.close()
     conn.close()
 
