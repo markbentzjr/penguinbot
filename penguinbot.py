@@ -6,7 +6,7 @@ from discord.utils import get
 import json
 import os
 import psycopg2
-import random 
+import random
 
 rock = 'rock'
 scissors = 'scissors'
@@ -29,9 +29,9 @@ async def on_message(message):
     m = "{}".format(message.author.id)
     print("work1")
     cur = conn.cursor()
-#    delt = """ DELETE FROM users WHERE user_id = %s; """
-#    cur.execute(delt, (m,))
-#    conn.commit()
+    #    delt = """ DELETE FROM users WHERE user_id = %s; """
+    #    cur.execute(delt, (m,))
+    #    conn.commit()
     sq1 = """SELECT user_id FROM users; """
     cur.execute(sq1)
     n = cur.fetchall()
@@ -50,7 +50,7 @@ async def on_message(message):
     cur.execute(updatesq2, (m,))
     exp = insert2
     lvl_start = cur.fetchone()
-    lvl_end = (exp**(1/3))
+    lvl_end = (exp ** (1 / 3))
     print(lvl_start, lvl_end)
     if lvl_start[0] < lvl_end:
         lvl_end = lvl_start[0] + 1
@@ -94,8 +94,8 @@ async def on_message(message):
                 await botmsg.send("You Win!")
             elif rpsgame == 'Scissors':
                 await botmsg.send("It's a Draw! Play Again?")
-            
-            
+
+
 @bot.command(pass_context=True)
 async def ping(message):
     botmsg = message.channel
@@ -104,15 +104,15 @@ async def ping(message):
 
 @bot.command(pass_context=True)
 async def join(ctx):
-        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-        m = "{}".format(ctx.message.author.id)
-        cur = conn.cursor()
-        sq2 = """ INSERT INTO users (user_id, experience, level) VALUES (%s, %s, %s)"""
-        insert = (m, 5, 1)
-        cur.execute(sq2, (insert))
-        conn.commit()
-        cur.close()
-        conn.close()
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    m = "{}".format(ctx.message.author.id)
+    cur = conn.cursor()
+    sq2 = """ INSERT INTO users (user_id, experience, level) VALUES (%s, %s, %s)"""
+    insert = (m, 5, 1)
+    cur.execute(sq2, (insert))
+    conn.commit()
+    cur.close()
+    conn.close()
 
 
 @bot.command(pass_context=True)
@@ -161,15 +161,17 @@ async def leaderboard(ctx):
     cur.execute(updatesq4)
     leader = cur.fetchmany(10)
     print(leader[0:10])
+    leader_users = []
     i = 0
-    for i in range(0,10):
-        res = int(''.join(map(str, leader[i]))) 
-        userexist = res
-        print(userexist, bot.get_user(userexist))
-        leaderusers[i] = bot.get_user(userexist)
-        print(leaderusers[i])
-    await botmsg.send("{}".format(leaderusers[0:10]))
+    for i in range(0, 10):
+        res = int(''.join(map(str, leader[i])))
+        user_exist = res
+        print(user_exist, bot.get_user(user_exist))
+        leader_users[i] = bot.get_user(user_exist)
+        print(leader_users[i])
+    await botmsg.send("{}".format(leader_users[0:10]))
     cur.close()
     conn.close()
+
 
 bot.run(os.getenv("TOKEN"))
