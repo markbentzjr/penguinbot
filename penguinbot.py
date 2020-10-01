@@ -14,7 +14,8 @@ paper = 'paper'
 DATABASE_URL = os.environ['DATABASE_URL']
 
 bot = commands.Bot(command_prefix='#')
-discord.Client(chunk_guilds_at_startup =True)
+discord.Intents.members()
+discord.Client(chunk_guilds_at_startup=True)
 
 
 @bot.event
@@ -168,9 +169,8 @@ async def leaderboard(ctx):
         res = int(''.join(map(str, leader[i])))
         user_exist = res
         print(user_exist, bot.get_user(user_exist))
-        user = bot.get_user(user_exist)
-        if user is not None:
-            print(user)
+        if user_exist is not None:
+            user = await bot.get_user(user_exist)
             username = user.name
             leader_users.append(username)
             print(leader_users)
