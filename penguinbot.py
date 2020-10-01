@@ -167,7 +167,7 @@ async def leaderboard(ctx):
         userexist = res
         print(userexist)
         print(bot.get_user(userexist))
-    await botmsg.send("{}".format(userexist.name))
+    await botmsg.send("{}".format(userexist))
     cur.close()
     conn.close()
 
