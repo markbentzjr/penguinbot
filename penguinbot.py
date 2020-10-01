@@ -168,7 +168,8 @@ async def leaderboard(ctx):
         user_exist = res
         print(user_exist, bot.get_user(user_exist))
         if user_exist is not None:
-            user = await bot.get_user(user_exist)
+            user = bot.get_user(user_exist)
+            print(user)
             username = user.name
             leader_users.append(username)
             print(leader_users)
