@@ -14,6 +14,7 @@ paper = 'paper'
 DATABASE_URL = os.environ['DATABASE_URL']
 
 bot = commands.Bot(command_prefix='#')
+discord.Client(fetch_offline_members=True)
 
 
 @bot.event
@@ -173,7 +174,7 @@ async def leaderboard(ctx):
             username = user.name
             leader_users.append(username)
             print(leader_users)
-    await botmsg.send("{}".format(leader_users))
+    await botmsg.send("{}".format(leader_users[1:]))
     cur.close()
     conn.close()
 
