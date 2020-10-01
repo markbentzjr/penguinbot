@@ -24,7 +24,6 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     botmsg = message.channel
-    await bot.process_commands(message)
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     m = "{}".format(message.author.id)
     print("work1")
@@ -91,6 +90,7 @@ async def on_message(message):
             await botmsg.send("You Win!")
         elif rpsgame == 'Scissors':
             await botmsg.send("It's a Draw! Play Again?")
+    await bot.process_commands(message)
             
             
 @bot.command(pass_context=True)
