@@ -163,14 +163,16 @@ async def leaderboard(ctx):
     print(leader[0:10])
     leader_users = []
     i = 0
+    k = 1
     for i in range(0, 10):
         res = int(''.join(map(str, leader[i])))
         user_exist = res
         print(user_exist, bot.get_user(user_exist))
-        if user_exist != None:
-            leader_users = bot.get_user(user_exist)
-            print(leader_users)
-    await botmsg.send("{}".format(leader_users))
+        if user_exist is not None:
+            leader_users[k] = bot.get_user(user_exist)
+            print(leader_users[k])
+            k = k + 1
+    await botmsg.send("{}".format(leader_users[k]))
     cur.close()
     conn.close()
 
