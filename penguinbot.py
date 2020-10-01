@@ -14,7 +14,7 @@ paper = 'paper'
 DATABASE_URL = os.environ['DATABASE_URL']
 
 bot = commands.Bot(command_prefix='#')
-discord.Intents.members()
+discord.Intents.all()
 discord.Client(chunk_guilds_at_startup=True)
 
 
