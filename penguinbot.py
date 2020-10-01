@@ -163,7 +163,7 @@ async def leaderboard(ctx):
     print(leader[0:10])
     i = 0
     for i in range(0,10):
-        res = [int(ii) for ii in leader[i].split() if ii.isdigit()] 
+        res = int(''.join(map(str, test_tuple))) 
         userexist = res[i]
         print(userexist)
         print(bot.get_user(userexist))
