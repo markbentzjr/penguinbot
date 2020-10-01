@@ -101,6 +101,7 @@ async def ping(message):
     botmsg = message.channel
     await botmsg.send('pong')
 
+
 @bot.command(pass_context=True)
 async def join(ctx):
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
@@ -112,6 +113,7 @@ async def join(ctx):
         conn.commit()
         cur.close()
         conn.close()
+
 
 @bot.command(pass_context=True)
 async def embed(ctx):
@@ -149,6 +151,7 @@ async def rank(ctx):
     cur.close()
     conn.close()
 
+
 @bot.command(pass_context=True)
 async def leaderboard(ctx):
     botmsg = ctx.channel
@@ -157,6 +160,7 @@ async def leaderboard(ctx):
     updatesq4 = """ SELECT user_id FROM users ORDER BY experience DESC; """
     cur.execute(updatesq4)
     leader = cur.fetchmany(10)
+    print(leader)
     i = 0
     for i in range(0,10):
         userexist = get(bot.get_user(ctx), id=leader[i])
