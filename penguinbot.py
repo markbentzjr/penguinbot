@@ -161,9 +161,10 @@ async def leaderboard(ctx):
     cur.execute(updatesq4)
     leader = cur.fetchmany(10)
     print(leader[0:10])
+    res = [int(i) for i in leader[0:10].split() if i.isdigit()] 
     i = 0
     for i in range(0,10):
-        userexist = leader[i]
+        userexist = res[i]
         print(userexist)
         print(bot.get_user(userexist))
     await botmsg.send("{}".format(userexist))
