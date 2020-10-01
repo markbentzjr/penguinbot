@@ -168,8 +168,8 @@ async def leaderboard(ctx):
         user_exist = res
         print(user_exist, bot.get_user(user_exist))
         if user_exist is not None:
-            save = bot.get_user(user_exist)
-            leader_users.append(save.name)
+            save = bot.get_user(user_exist).name
+            leader_users.append(save)
             print(leader_users)
     await botmsg.send("{}".format(leader_users))
     cur.close()
