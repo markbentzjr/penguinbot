@@ -161,7 +161,7 @@ async def leaderboard(ctx):
     cur.execute(updatesq4)
     leader = cur.fetchmany(10)
     print(leader[0:10])
-    leader_users = []
+    leader_users = [0:10]
     i = 0
     k = 1
     for i in range(0, 10):
