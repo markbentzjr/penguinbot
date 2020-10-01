@@ -64,35 +64,36 @@ async def on_message(message):
         print("PostgreSQL cursor is closed")
     if message.author.id == bot.user.id:
         pass
-    if message.content.lower() == 'penguin':
-        await botmsg.send(":penguin:")
-    if message.content.lower() == paper.lower():
-        rpsgame = random.choice(['Rock', 'Paper', 'Scissors'])
-        await botmsg.send("{}".format(rpsgame))
-        if rpsgame == 'Scissors':
-            await botmsg.send("You Lose!")
-        elif rpsgame == 'Rock':
-            await botmsg.send("You Win!")
-        elif rpsgame == 'Paper':
-            await botmsg.send("It's a Draw! Play Again?")
-    if message.content.lower() == rock.lower():
-        rpsgame = random.choice(['Rock', 'Paper', 'Scissors'])
-        await botmsg.send("{}".format(rpsgame))
-        if rpsgame == 'Paper':
-            await botmsg.send("You Lose!")
-        elif rpsgame == 'Scissors':
-            await botmsg.send("You Win!")
-        elif rpsgame == 'Rock':
-            await botmsg.send("It's a Draw! Play Again?")
-    if message.content.lower() == scissors.lower():
-        rpsgame = random.choice(['Rock', 'Paper', 'Scissors'])
-        await botmsg.send("{}".format(rpsgame))
-        if rpsgame == 'Rock':
-            await botmsg.send("You Lose!")
-        elif rpsgame == 'Paper':
-            await botmsg.send("You Win!")
-        elif rpsgame == 'Scissors':
-            await botmsg.send("It's a Draw! Play Again?")
+    else:
+        if message.content.lower() == 'penguin':
+            await botmsg.send(":penguin:")
+        if message.content.lower() == paper.lower():
+            rpsgame = random.choice(['Rock', 'Paper', 'Scissors'])
+            await botmsg.send("{}".format(rpsgame))
+            if rpsgame == 'Scissors':
+                await botmsg.send("You Lose!")
+            elif rpsgame == 'Rock':
+                await botmsg.send("You Win!")
+            elif rpsgame == 'Paper':
+                await botmsg.send("It's a Draw! Play Again?")
+        if message.content.lower() == rock.lower():
+            rpsgame = random.choice(['Rock', 'Paper', 'Scissors'])
+            await botmsg.send("{}".format(rpsgame))
+            if rpsgame == 'Paper':
+                await botmsg.send("You Lose!")
+            elif rpsgame == 'Scissors':
+                await botmsg.send("You Win!")
+            elif rpsgame == 'Rock':
+                await botmsg.send("It's a Draw! Play Again?")
+        if message.content.lower() == scissors.lower():
+            rpsgame = random.choice(['Rock', 'Paper', 'Scissors'])
+            await botmsg.send("{}".format(rpsgame))
+            if rpsgame == 'Rock':
+                await botmsg.send("You Lose!")
+            elif rpsgame == 'Paper':
+                await botmsg.send("You Win!")
+            elif rpsgame == 'Scissors':
+                await botmsg.send("It's a Draw! Play Again?")
             
             
 @bot.command(pass_context=True)
