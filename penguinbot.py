@@ -54,7 +54,7 @@ async def on_message(message):
     print(lvl_start, lvl_end)
     if lvl_start[0] < lvl_end:
         lvl_end = lvl_start[0] + 1
-        await botmsg.send(message.channel, "{} has leveled up to level {}".format(message.author.mention, lvl_end))
+        await botmsg.send("{} has leveled up to level {}".format(message.author.mention, lvl_end))
         update_lvl = """ UPDATE users SET level = %s WHERE user_id = %s; """
         cur.execute(update_lvl, (lvl_end, m))
         conn.commit()
@@ -62,35 +62,35 @@ async def on_message(message):
         cur.close()
         conn.close()
         print("PostgreSQL cursor is closed")
-    if message.content == 'Penguin':
-        await botmsg.send(message.channel, ":penguin:")
-    if message.content == paper.upper().lower():
+    if message.content.lower() == 'penguin':
+        await botmsg.send(":penguin:")
+    if message.content.lower() == paper.lower():
         rpsgame = random.choice(['Rock', 'Paper', 'Scissors'])
-        await botmsg.send(message.channel, "{}".format(rpsgame))
+        await botmsg.send("{}".format(rpsgame))
         if rpsgame == 'Scissors':
-            await botmsg.send(message.channel, "You Lose!")
+            await botmsg.send("You Lose!")
         elif rpsgame == 'Rock':
-            await botmsg.send(message.channel, "You Win!")
+            await botmsg.send("You Win!")
         elif rpsgame == 'Paper':
-            await botmsg.send(message.channel, "It's a Draw! Play Again?")
-    if message.content == rock.upper().lower():
+            await botmsg.send("It's a Draw! Play Again?")
+    if message.content.lower() == rock.lower():
         rpsgame = random.choice(['Rock', 'Paper', 'Scissors'])
-        await botmsg.send(message.channel, "{}".format(rpsgame))
+        await botmsg.send("{}".format(rpsgame))
         if rpsgame == 'Paper':
-            await botmsg.send(message.channel, "You Lose!")
+            await botmsg.send("You Lose!")
         elif rpsgame == 'Scissors':
-            await botmsg.send(message.channel, "You Win!")
+            await botmsg.send("You Win!")
         elif rpsgame == 'Rock':
-            await botmsg.send(message.channel, "It's a Draw! Play Again?")
-    if message.content == scissors.upper().lower():
+            await botmsg.send("It's a Draw! Play Again?")
+    if message.content.lower() == scissors.lower():
         rpsgame = random.choice(['Rock', 'Paper', 'Scissors'])
-        await botmsg.send(message.channel, "{}".format(rpsgame))
+        await botmsg.send("{}".format(rpsgame))
         if rpsgame == 'Rock':
-            await botmsg.send(message.channel, "You Lose!")
+            await botmsg.send("You Lose!")
         elif rpsgame == 'Paper':
-            await botmsg.send(message.channel, "You Win!")
+            await botmsg.send("You Win!")
         elif rpsgame == 'Scissors':
-            await botmsg.send(message.channel, "It's a Draw! Play Again?")
+            await botmsg.send("It's a Draw! Play Again?")
             
             
 @bot.command(pass_context=True)
