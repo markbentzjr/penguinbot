@@ -165,9 +165,9 @@ async def leaderboard(ctx):
     for i in range(0,10):
         res = int(''.join(map(str, leader[i]))) 
         userexist = res
-        print(userexist)
-        print(bot.get_user(userexist))
-    await botmsg.send("{}".format(userexist))
+        print(userexist, bot.get_user(userexist))
+        leaderusers[i] = bot.get_user(userexist)
+    await botmsg.send("{}".format(leaderusers))
     cur.close()
     conn.close()
 
