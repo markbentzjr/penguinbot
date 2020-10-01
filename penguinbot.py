@@ -161,18 +161,16 @@ async def leaderboard(ctx):
     cur.execute(updatesq4)
     leader = cur.fetchmany(10)
     print(leader[0:10])
-    leader_users = [0:10]
+    leader_users = []
     i = 0
-    k = 1
     for i in range(0, 10):
         res = int(''.join(map(str, leader[i])))
         user_exist = res
         print(user_exist, bot.get_user(user_exist))
         if user_exist is not None:
-            leader_users[k] = bot.get_user(user_exist)
-            print(leader_users[k])
-            k = k + 1
-    await botmsg.send("{}".format(leader_users[k]))
+            leader_users.append(bot.get_user(user_exist))
+            print(leader_users)
+    await botmsg.send("{}".format(leader_users))
     cur.close()
     conn.close()
 
