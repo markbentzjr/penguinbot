@@ -62,7 +62,7 @@ async def on_message(message):
         cur.close()
         conn.close()
         print("PostgreSQL cursor is closed")
-    if message.author.id != bot.user.id:
+    if message.author.id == bot.user.id:
         pass
     if message.content.lower() == 'penguin':
         await botmsg.send(":penguin:")
